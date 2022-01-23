@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  oc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FILE_DIRECTORY: $FILE_DIRECTORY
+        HOST_NAME: $HOST_NAME
+        DNS_NAME: $DNS_NAME
+        IP_ADDR: $IP_ADDR
+        SSL_C: $SSL_C
+        SSL_ST: $SSL_ST
+        SSL_L: $SSL_L
+        SSL_O: $SSL_O
+        SSL_OU: $SSL_OU
+    labels:
+      certificate.staying.overnight: "Sign this overnight certificate"
+    volumes:
+      # workspace
+      - ./workspace:/workspace
+      # template
+      - ./template:/template
+      # SSL
+      - ./cert:/etc/ssl/private
+    tty: true
+    entrypoint: bash -c "bash /workspace/entrypoint.sh $FILE_DIRECTORY $HOST_NAME $DNS_NAME $IP_ADDR $SSL_C $SSL_ST $SSL_L $SSL_O $SSL_OU && /bin/bash"

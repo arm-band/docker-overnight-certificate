@@ -1,0 +1,1 @@
+subjectAltName = DNS:HOST_NAME, IP:IP_ADDR
